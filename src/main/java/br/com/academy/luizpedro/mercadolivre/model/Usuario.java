@@ -27,4 +27,11 @@ public class Usuario {
         this.senha = senhalimpa.encode() ;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
 }
