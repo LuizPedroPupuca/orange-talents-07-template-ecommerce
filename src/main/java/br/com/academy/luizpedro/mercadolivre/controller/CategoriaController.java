@@ -5,6 +5,7 @@ import br.com.academy.luizpedro.mercadolivre.dto.UsuarioRequest;
 import br.com.academy.luizpedro.mercadolivre.model.Categoria;
 import br.com.academy.luizpedro.mercadolivre.model.Usuario;
 import br.com.academy.luizpedro.mercadolivre.repository.CategoriaRepository;
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
-
     @Autowired
     private CategoriaRepository categoriaRepository;
 
