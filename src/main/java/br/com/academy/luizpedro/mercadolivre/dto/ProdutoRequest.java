@@ -1,10 +1,7 @@
 package br.com.academy.luizpedro.mercadolivre.dto;
 
 import br.com.academy.luizpedro.mercadolivre.controller.validation.ExistId;
-import br.com.academy.luizpedro.mercadolivre.model.Caracteristica;
-import br.com.academy.luizpedro.mercadolivre.model.Categoria;
-import br.com.academy.luizpedro.mercadolivre.model.Produto;
-import br.com.academy.luizpedro.mercadolivre.model.Usuario;
+import br.com.academy.luizpedro.mercadolivre.model.*;
 import br.com.academy.luizpedro.mercadolivre.repository.CategoriaRepository;
 import org.hibernate.validator.constraints.Length;
 
@@ -31,7 +28,9 @@ public class ProdutoRequest {
     @Size(min = 3)
     private List<CaracteristicaRequest> caracteristicas = new ArrayList<>();
 
-    public ProdutoRequest(String nome, BigDecimal valor, Integer qtde, String descricao, Long idCategoria, List<CaracteristicaRequest> caracteristicas) {
+
+    public ProdutoRequest(String nome, BigDecimal valor, Integer qtde, String descricao,
+                          Long idCategoria, List<CaracteristicaRequest> caracteristicas) {
         this.nome = nome;
         this.valor = valor;
         this.qtde = qtde;

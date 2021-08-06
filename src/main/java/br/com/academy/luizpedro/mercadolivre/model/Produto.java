@@ -5,9 +5,11 @@ import br.com.academy.luizpedro.mercadolivre.dto.CaracteristicaRequest;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Produto {
@@ -27,9 +29,17 @@ public class Produto {
     @ManyToOne
     private Usuario usuario;
 
+    @OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Imagens> imagens = new ArrayList<>();
+
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
-    public Produto(String nome, BigDecimal valor, Integer qtde, String descricao, Categoria categoria, Usuario usuariologado, List<CaracteristicaRequest> caracteristicas) {
+    @Deprecated
+    public Produto(){}
+
+    public Produto(String nome, BigDecimal valor, Integer qtde, String descricao,
+                   Categoria categoria, Usuario usuariologado,
+                   List<CaracteristicaRequest> caracteristicas) {
         this.nome = nome;
         this.valor = valor;
         this.qtde = qtde;
@@ -39,4 +49,16 @@ public class Produto {
         caracteristicas.forEach(caracteristica -> this.caracteristicas.add(caracteristica.toModel(this)));
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void associaImagens(List<String> urls) {
+        List<Imagens> imagens = urls.stream().map(url -> new Imagens(this, url)).collect(Collectors.toList());
+        this.imagens.addAll(imagens);
+    }
 }
