@@ -1,7 +1,10 @@
 package br.com.academy.luizpedro.mercadolivre.controller;
 import br.com.academy.luizpedro.mercadolivre.dto.ImagemRequest;
+import br.com.academy.luizpedro.mercadolivre.dto.OpiniaoRequest;
 import br.com.academy.luizpedro.mercadolivre.dto.ProdutoRequest;
+import br.com.academy.luizpedro.mercadolivre.model.Opiniao;
 import br.com.academy.luizpedro.mercadolivre.model.Produto;
+import br.com.academy.luizpedro.mercadolivre.model.Usuario;
 import br.com.academy.luizpedro.mercadolivre.repository.CategoriaRepository;
 import br.com.academy.luizpedro.mercadolivre.repository.ProdutoRepository;
 import br.com.academy.luizpedro.mercadolivre.repository.UsuarioRepository;
@@ -57,5 +60,21 @@ public class ProdutoController {
         produto.associaImagens(urls);
         produtoRepository.save(produto);
         return ResponseEntity.ok().body("Imagens cadastradas " + "no produto " + produto.getNome() + " com sucesso");
+    }
+
+    @PostMapping("/opiniao")
+    @Transactional
+    public ResponseEntity cadastraOpiniao(@RequestBody@Valid OpiniaoRequest opiniaoRequest,
+                                          @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
+        Optional<Produto> produtoOptional = produtoRepository.findById(opiniaoRequest.getIdProduto());
+
+        if (produtoOptional.isEmpty() || !produtoOptional.get().getUsuario().equals(usuarioLogado.get()))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        Produto produto = produtoOptional.get();
+        Usuario usuario = usuarioLogado.get();
+        produto.adicionaOpiniao(opiniaoRequest, produto, usuario);
+        produtoRepository.save(produto);
+        return ResponseEntity.ok().build();
     }
 }

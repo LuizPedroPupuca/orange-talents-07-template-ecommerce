@@ -1,7 +1,11 @@
 package br.com.academy.luizpedro.mercadolivre.model;
 import br.com.academy.luizpedro.mercadolivre.utils.SenhaLimpa;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -21,7 +25,10 @@ public class Usuario {
     private String senha;
 
     @Deprecated
-    public Usuario(){ }
+    public Usuario(){}
+
+
+    public Usuario(@Min(1) @Max(5) Integer nota, @NotBlank String titulo, @NotBlank @Length(max = 500) String descricao, Produto produto, Usuario usuario){ }
 
     public Usuario(String login, SenhaLimpa senhalimpa) {
         this.login = login;

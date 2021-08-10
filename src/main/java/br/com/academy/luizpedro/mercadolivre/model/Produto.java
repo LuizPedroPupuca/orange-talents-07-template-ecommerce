@@ -1,6 +1,7 @@
 package br.com.academy.luizpedro.mercadolivre.model;
 
 import br.com.academy.luizpedro.mercadolivre.dto.CaracteristicaRequest;
+import br.com.academy.luizpedro.mercadolivre.dto.OpiniaoRequest;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -32,7 +33,11 @@ public class Produto {
     @OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE)
     private List<Imagens> imagens = new ArrayList<>();
 
+    @OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Opiniao> opinioes;
+
     private LocalDateTime dataCadastro = LocalDateTime.now();
+
 
     @Deprecated
     public Produto(){}
@@ -60,5 +65,11 @@ public class Produto {
     public void associaImagens(List<String> urls) {
         List<Imagens> imagens = urls.stream().map(url -> new Imagens(this, url)).collect(Collectors.toList());
         this.imagens.addAll(imagens);
+    }
+
+    public void adicionaOpiniao(OpiniaoRequest opiniaoRequest, Produto produto, Usuario usuario){
+        Opiniao opiniao = new Opiniao(opiniaoRequest.getNota(), opiniaoRequest.getTitulo(),
+                opiniaoRequest.getDescricao(), produto, usuario);
+        this.opinioes.add(opiniao);
     }
 }
