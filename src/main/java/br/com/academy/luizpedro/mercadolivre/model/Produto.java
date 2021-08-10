@@ -3,7 +3,6 @@ package br.com.academy.luizpedro.mercadolivre.model;
 import br.com.academy.luizpedro.mercadolivre.dto.CaracteristicaRequest;
 import br.com.academy.luizpedro.mercadolivre.dto.OpiniaoRequest;
 import br.com.academy.luizpedro.mercadolivre.dto.PerguntaRequest;
-import org.springframework.security.core.parameters.P;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -33,7 +32,7 @@ public class Produto {
     private Usuario usuario;
 
     @OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE)
-    private List<Imagens> imagens = new ArrayList<>();
+    private List<Imagem> imagens = new ArrayList<>();
 
     @OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE)
     private List<Opiniao> opinioes = new ArrayList<>();
@@ -59,6 +58,30 @@ public class Produto {
         caracteristicas.forEach(caracteristica -> this.caracteristicas.add(caracteristica.toModel(this)));
     }
 
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public Set<Caracteristica> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public List<Imagem> getImagens() {
+        return imagens;
+    }
+
+    public List<Opiniao> getOpinioes() {
+        return opinioes;
+    }
+
+    public List<Pergunta> getPerguntas() {
+        return perguntas;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -68,7 +91,7 @@ public class Produto {
     }
 
     public void associaImagens(List<String> urls) {
-        List<Imagens> imagens = urls.stream().map(url -> new Imagens(this, url)).collect(Collectors.toList());
+        List<Imagem> imagens = urls.stream().map(url -> new Imagem(this, url)).collect(Collectors.toList());
         this.imagens.addAll(imagens);
     }
 

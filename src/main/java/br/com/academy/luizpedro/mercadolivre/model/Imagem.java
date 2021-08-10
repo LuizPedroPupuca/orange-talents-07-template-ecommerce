@@ -3,7 +3,7 @@ package br.com.academy.luizpedro.mercadolivre.model;
 import javax.persistence.*;
 
 @Entity
-public class Imagens {
+public class Imagem {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,10 +14,14 @@ public class Imagens {
     private String url;
 
     @Deprecated
-    public Imagens(){}
+    public Imagem(){}
 
-    public Imagens(Produto produto, String url) {
+    public Imagem(Produto produto, String url) {
         this.produto = produto;
         this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }
