@@ -2,6 +2,8 @@ package br.com.academy.luizpedro.mercadolivre.model;
 
 import br.com.academy.luizpedro.mercadolivre.dto.CaracteristicaRequest;
 import br.com.academy.luizpedro.mercadolivre.dto.OpiniaoRequest;
+import br.com.academy.luizpedro.mercadolivre.dto.PerguntaRequest;
+import org.springframework.security.core.parameters.P;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -34,7 +36,10 @@ public class Produto {
     private List<Imagens> imagens = new ArrayList<>();
 
     @OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE)
-    private List<Opiniao> opinioes;
+    private List<Opiniao> opinioes = new ArrayList<>();
+
+    @OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Pergunta> perguntas = new ArrayList<>();;
 
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
@@ -71,5 +76,10 @@ public class Produto {
         Opiniao opiniao = new Opiniao(opiniaoRequest.getNota(), opiniaoRequest.getTitulo(),
                 opiniaoRequest.getDescricao(), produto, usuario);
         this.opinioes.add(opiniao);
+    }
+
+    public void adicionaPergunta(PerguntaRequest perguntaRequest, Produto produto, Usuario usuario){
+        Pergunta pergunta = new Pergunta(perguntaRequest.getTitulo(), usuario, produto);
+        this.perguntas.add(pergunta);
     }
 }
