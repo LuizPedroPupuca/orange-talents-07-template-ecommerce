@@ -35,7 +35,8 @@ public class ProdutoDetalhesResponse {
         this.mediaNotas = produto.getOpinioes().stream().map(opiniao -> opiniao.getNota())
                .mapToDouble(Integer::doubleValue).average().orElse(0.0);
         this.numeroTotalNotas = produto.getOpinioes().stream().map(opiniao -> opiniao.getNota())
-               .reduce(0, Integer::sum);
+                .collect(Collectors.toList()).size();
+               //.reduce(0, Integer::sum);
         this.opinioes = produto.getOpinioes().stream().map(OpiniaoResponse:: new).collect(Collectors.toList());
         this.perguntas = produto.getPerguntas().stream().map((PerguntaResponse::new)).collect(Collectors.toList());
     }
