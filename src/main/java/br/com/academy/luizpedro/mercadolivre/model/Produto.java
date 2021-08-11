@@ -3,8 +3,10 @@ package br.com.academy.luizpedro.mercadolivre.model;
 import br.com.academy.luizpedro.mercadolivre.dto.CaracteristicaRequest;
 import br.com.academy.luizpedro.mercadolivre.dto.OpiniaoRequest;
 import br.com.academy.luizpedro.mercadolivre.dto.PerguntaRequest;
+import io.jsonwebtoken.lang.Assert;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -62,6 +64,10 @@ public class Produto {
         return valor;
     }
 
+    public Integer getQtde() {
+        return qtde;
+    }
+
     public Set<Caracteristica> getCaracteristicas() {
         return caracteristicas;
     }
@@ -104,5 +110,14 @@ public class Produto {
     public void adicionaPergunta(PerguntaRequest perguntaRequest, Produto produto, Usuario usuario){
         Pergunta pergunta = new Pergunta(perguntaRequest.getTitulo(), usuario, produto);
         this.perguntas.add(pergunta);
+    }
+
+    public boolean abateNoEstoque(@Positive int qtde) {
+        Assert.isTrue(qtde > 0, "Quantidade maior do que zero "+qtde);
+        if(qtde <= this.qtde){
+            this.qtde -= qtde;
+            return true;
+        }
+        return false;
     }
 }
