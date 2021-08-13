@@ -112,12 +112,28 @@ public class Produto {
         this.perguntas.add(pergunta);
     }
 
-    public boolean abateNoEstoque(@Positive int qtde) {
-        Assert.isTrue(qtde > 0, "Quantidade maior do que zero "+qtde);
-        if(qtde <= this.qtde){
-            this.qtde -= qtde;
+    public boolean abataEstoque(@Positive int quantidade) {
+        Assert.isTrue(quantidade > 0, "A quantidade deve ser maior que zero para abater o estoque "+quantidade);
+
+        if(quantidade <= this.qtde) {
+            this.qtde-=quantidade;
             return true;
+
         }
+
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "nome='" + nome + '\'' +
+                ", valor=" + valor +
+                ", qtde=" + qtde +
+                ", descricao='" + descricao + '\'' +
+                ", dataCadastro=" + dataCadastro +
+                '}';
+    }
+
+
 }

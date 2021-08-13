@@ -51,6 +51,10 @@ public class Usuario {
         return Objects.equals(id, usuario.id);
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

@@ -1,5 +1,4 @@
 package br.com.academy.luizpedro.mercadolivre.repository;
-
 import br.com.academy.luizpedro.mercadolivre.model.Compra;
 import org.springframework.data.jpa.repository.JpaRepository;
 

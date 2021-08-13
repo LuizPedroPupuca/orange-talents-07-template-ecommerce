@@ -1,6 +1,5 @@
 package br.com.academy.luizpedro.mercadolivre.dto;
 
-import br.com.academy.luizpedro.mercadolivre.model.Compra;
 import br.com.academy.luizpedro.mercadolivre.model.GatewayPagamento;
 
 import javax.validation.constraints.NotNull;
